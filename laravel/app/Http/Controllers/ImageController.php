@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -88,11 +89,14 @@ class ImageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Image  $image
-     * @return \Illuminate\Http\Response
+     *
+     *
      */
-    public function destroy(Image $image)
+    public function destroy($id)
     {
-        //
+        $image = Image::findOrFail($id);
+//        Storage::disk('images')->delete($image['image_path']);
+        $image->delete();
+        return redirect()->route('home');
     }
 }
