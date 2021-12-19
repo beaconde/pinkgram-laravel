@@ -20,11 +20,19 @@ class CommentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     *
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data = $request->all();
+
+        Comment::create([
+            'user_id' => $data['user_id'],
+            'image_id' => $data['image_id'],
+            'content' => $data['content']
+        ]);
+
+        return redirect()->route('home');
     }
 
     /**
@@ -75,11 +83,13 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Comment  $comment
-     * @return \Illuminate\Http\Response
+     *
+     *
      */
-    public function destroy(Comment $comment)
+    public function destroy($id)
     {
-        //
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
+        return redirect()->route('home');
     }
 }

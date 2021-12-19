@@ -27,16 +27,65 @@
                         </div>
                     </div>
                     <img class="card-img-bottom" src="{{asset('/storage/images/'.$image->image_path)}}" alt="Card image cap">
-                    <div class="card-footer d-flex justify-content-between">
-                        <div>
-                            <p class="card-text"><small class="text-muted">{{'@'.\App\User::find($image->user_id)->nick.'  |  '.$image->created_at->format('d-m-Y')}}</small></p>
-                            <p class="card-text mt-2 mb-2">{{$image->description}}</p>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <p class="card-text"><small class="text-muted">{{'@'.\App\User::find($image->user_id)->nick.'  |  '.$image->created_at->format('d-m-Y')}}</small></p>
+                                <p class="card-text mt-2 mb-2">{{$image->description}}</p>
+                            </div>
+                            @if ($image->user_id == Auth::user()->id)
+                                <button type="button" class="btn btn-lg btn-danger" data-toggle="modal" data-target="#borrarModal{{$image->id}}">
+                                    Borrar
+                                </button>
+                            @endif
                         </div>
-                        @if ($image->user_id == Auth::user()->id)
-                            <button type="button" class="btn btn-lg btn-danger" data-toggle="modal" data-target="#borrarModal{{$image->id}}">
-                                Borrar
-                            </button>
-                        @endif
+                        <div class="mt-3">
+                            <h4>Comentarios ({{DB::table('comments')->where('image_id', $image->id)->count()}})</h4>
+                            <hr>
+                            <form action="{{route('comment.create')}}" method="POST">
+                                @csrf
+                                {{ method_field('PATCH')}}
+                                <div class="form-group row">
+                                    <div class="w-100 m-3" >
+                                        <textarea id="content" class="form-control" name="content" required></textarea>
+                                        <input type="hidden" value="{{Auth::user()->id}}" id="user_id" name="user_id">
+                                        <input type="hidden" value="{{$image->id}}" id="image_id" name="image_id">
+                                        <button type="submit" class="btn btn-success mt-3 mb-3">Enviar</button>
+                                    </div>
+                                </div>
+                            </form>
+                            @foreach ($comments as $comment)
+                                @if ($comment->image_id == $image->id)
+                                    <hr>
+                                    <p class="text-muted">{{'@'.\App\User::find($comment->user_id)->nick}}</p>
+                                    <p>{{$comment->content}}</p>
+                                    @if (Auth::user()->id == $comment->user_id || Auth::user()->id == $image->user_id)
+                                        <button type="button" class="btn btn-lg btn-danger" data-toggle="modal" data-target="#borrarModal{{$comment->id}}">
+                                            Borrar
+                                        </button>
+                                    @endif
+                                    <div class="modal fade" id="borrarModal{{$comment->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Borrar comentario</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>¿Estás seguro de que quieres borrar el comentario?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
+                                                    <a href="{{ route('comment.destroy', ['id' => $comment->id])  }}" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Borrar</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
                 </div>
                 <div class="modal fade" id="borrarModal{{$image->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

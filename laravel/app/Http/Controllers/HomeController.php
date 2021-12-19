@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Image;
 use Illuminate\Http\Request;
 
@@ -25,6 +26,7 @@ class HomeController extends Controller
     public function index()
     {
         $images = Image::paginate(5);
-        return view('home', ['images' => $images]);
+        $comments = Comment::all();
+        return view('home', ['images' => $images, 'comments' => $comments]);
     }
 }
