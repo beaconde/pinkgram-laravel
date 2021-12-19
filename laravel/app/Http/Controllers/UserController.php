@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
+use App\Image;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +39,13 @@ class UserController extends Controller
 
     public function upload() {
         return view('image.create');
+    }
+
+    public function show() {
+        $user = User::findOrFail(Auth::user()->id);
+        $images = Image::paginate(5);
+        $comments = Comment::all();
+        return view('user.profile', ['user' => $user, 'images' => $images, 'comments' => $comments]);
     }
 
 }
