@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ImageController extends Controller
 {
@@ -20,11 +21,23 @@ class ImageController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     *
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data = $request->all();
+        $image = $request->file('image');
+
+        $image_name = Auth::user()->id."_".$image->getClientOriginalName();
+        $image->storeAs('public/images', $image_name);
+
+        Image::create([
+           'user_id' => Auth::user()->id,
+           'image_path' => $image_name,
+           'description' => $data['description']
+        ]);
+
+        return redirect()->route('home');
     }
 
     /**

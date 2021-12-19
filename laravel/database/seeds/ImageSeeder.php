@@ -17,7 +17,7 @@ class ImageSeeder extends Seeder
 
         DB::table('images')->insert([
             'user_id' => 1,
-            'image_path' => 'image_path',
+            'image_path' => 'placeholder.png',
             'description' => 'Imagen de Bea',
             'created_at' => now(),
             'updated_at' => now()
@@ -25,7 +25,7 @@ class ImageSeeder extends Seeder
 
         DB::table('images')->insert([
             'user_id' => 2,
-            'image_path' => 'image_path',
+            'image_path' => 'placeholder.png',
             'description' => 'Imagen de Alberto',
             'created_at' => now(),
             'updated_at' => now()
@@ -33,8 +33,8 @@ class ImageSeeder extends Seeder
 
         DB::table('images')->insert([
             'user_id' => 3,
-            'image_path' => 'image_path',
-            'description' => 'Imagen de Alberto',
+            'image_path' => 'placeholder.png',
+            'description' => 'Imagen de Abraham',
             'created_at' => now(),
             'updated_at' => now()
         ]);

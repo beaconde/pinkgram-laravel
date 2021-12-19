@@ -21,3 +21,6 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/user/{nick}/configuracion', 'UserController@edit')->name('user.edit');
 Route::patch('/user/{nick}', 'UserController@update')->name('user.update');
+
+Route::get('/user/{nick}/upload', 'UserController@upload')->name('image.upload');
+Route::patch('/user/{nick}/image', 'ImageController@create')->name('image.create');
