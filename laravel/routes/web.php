@@ -18,3 +18,6 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+
+Route::get('/user/{nick}/configuracion', 'UserController@edit')->name('user.edit');
+Route::patch('/user/{nick}', 'UserController@update')->name('user.update');

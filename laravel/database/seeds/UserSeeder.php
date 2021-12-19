@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
            'nick' => 'ramiralek',
            'email' => 'bea@gmail.com',
            'password' => Hash::make('bea'),
+           'image' => 'anon.png',
            'created_at' => now(),
            'updated_at' => now()
         ]);
@@ -32,6 +33,7 @@ class UserSeeder extends Seeder
             'nick' => 'kelsier94',
             'email' => 'alberto@gmail.com',
             'password' => Hash::make('alberto'),
+            'image' => 'anon.png',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -42,6 +44,7 @@ class UserSeeder extends Seeder
             'nick' => 'abalvi',
             'email' => 'abraham@gmail.com',
             'password' => Hash::make('abraham'),
+            'image' => 'anon.png',
             'created_at' => now(),
             'updated_at' => now()
         ]);
