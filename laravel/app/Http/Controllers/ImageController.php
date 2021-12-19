@@ -78,12 +78,16 @@ class ImageController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Image  $image
-     * @return \Illuminate\Http\Response
+     *
+     *
      */
-    public function update(Request $request, Image $image)
+    public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        $image = Image::findOrFail($id);
+        $image['description'] = $data['description'];
+        $image->save();
+        return redirect()->route('home');
     }
 
     /**

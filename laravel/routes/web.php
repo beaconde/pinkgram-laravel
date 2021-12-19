@@ -25,6 +25,7 @@ Route::patch('/user/{nick}', 'UserController@update')->name('user.update');
 Route::get('/user/{nick}/upload', 'UserController@upload')->name('image.upload');
 Route::patch('/user/{nick}/image', 'ImageController@create')->name('image.create');
 Route::get('/user/delete_image/{id}', 'ImageController@destroy')->name('image.destroy');
+Route::patch('/user/update_image/{id}', 'ImageController@update')->name('image.update');
 
 Route::patch('/comment', 'CommentController@create')->name('comment.create');
 Route::get('/comment/delete/{id}', 'CommentController@destroy')->name('comment.destroy');

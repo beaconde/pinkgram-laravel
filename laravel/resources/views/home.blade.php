@@ -34,9 +34,12 @@
                                 <p class="card-text mt-2 mb-2">{{$image->description}}</p>
                             </div>
                             @if ($image->user_id == Auth::user()->id)
-                                <button type="button" class="btn btn-lg btn-danger" data-toggle="modal" data-target="#borrarModal{{$image->id}}">
-                                    Borrar
-                                </button>
+                                <div>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#actualizarModal{{$image->id}}">Actualizar</button>
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borrarModal{{$image->id}}">
+                                        Borrar
+                                    </button>
+                                </div>
                             @endif
                         </div>
                         <div class="mt-3">
@@ -60,7 +63,7 @@
                                     <p class="text-muted">{{'@'.\App\User::find($comment->user_id)->nick}}</p>
                                     <p>{{$comment->content}}</p>
                                     @if (Auth::user()->id == $comment->user_id || Auth::user()->id == $image->user_id)
-                                        <button type="button" class="btn btn-lg btn-danger" data-toggle="modal" data-target="#borrarModal{{$comment->id}}">
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borrarModal{{$comment->id}}">
                                             Borrar
                                         </button>
                                     @endif
@@ -78,7 +81,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
-                                                    <a href="{{ route('comment.destroy', ['id' => $comment->id])  }}" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Borrar</a>
+                                                    <a href="{{ route('comment.destroy', ['id' => $comment->id])  }}" class="btn btn-danger active" role="button" aria-pressed="true">Borrar</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -102,8 +105,36 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
-                                <a href="{{ route('image.destroy', ['id' => $image->id])  }}" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Borrar</a>
+                                <a href="{{ route('image.destroy', ['id' => $image->id])  }}" class="btn btn-danger active" role="button" aria-pressed="true">Borrar</a>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="actualizarModal{{$image->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Actualizar imagen</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form method="POST" action="{{ route('image.update', ['id' => $image->id])  }}">
+                                @csrf
+                                {{ method_field('PATCH')}}
+                                <div class="modal-body">
+                                    <div class="form-group row">
+                                        <label for="description" class="col-md-4 col-form-label text-md-right">Description</label>
+                                        <div class="col-md-6">
+                                            <textarea id="description" class="form-control" name="description" autofocus required></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
