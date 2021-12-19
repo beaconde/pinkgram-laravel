@@ -30,12 +30,14 @@
                                         <p class="card-text"><small class="text-muted">{{'@'.\App\User::find($image->user_id)->nick.'  |  '.$image->created_at->format('d-m-Y')}}</small></p>
                                         <p class="card-text mt-2 mb-2">{{$image->description}}</p>
                                     </div>
-                                    <div>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#actualizarModal{{$image->id}}">Actualizar</button>
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borrarModal{{$image->id}}">
-                                            Borrar
-                                        </button>
-                                    </div>
+                                    @if ($image->user_id == Auth::user()->id)
+                                        <div>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#actualizarModal{{$image->id}}">Actualizar</button>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borrarModal{{$image->id}}">
+                                                Borrar
+                                            </button>
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="mt-3">
                                     <h4>Comentarios ({{DB::table('comments')->where('image_id', $image->id)->count()}})</h4>
@@ -57,9 +59,11 @@
                                             <hr>
                                             <p class="text-muted">{{'@'.\App\User::find($comment->user_id)->nick}}</p>
                                             <p>{{$comment->content}}</p>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borrarModal{{$comment->id}}">
-                                                Borrar
-                                            </button>
+                                            @if (Auth::user()->id == $comment->user_id || Auth::user()->id == $image->user_id)
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borrarModal{{$comment->id}}">
+                                                    Borrar
+                                                </button>
+                                            @endif
                                             <div class="modal fade" id="borrarModal{{$comment->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">

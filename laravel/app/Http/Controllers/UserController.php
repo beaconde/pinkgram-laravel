@@ -41,11 +41,16 @@ class UserController extends Controller
         return view('image.create');
     }
 
-    public function show() {
-        $user = User::findOrFail(Auth::user()->id);
+    public function show($id) {
+        $user = User::findOrFail($id);
         $images = Image::paginate(5);
         $comments = Comment::all();
         return view('user.profile', ['user' => $user, 'images' => $images, 'comments' => $comments]);
+    }
+
+    public function index() {
+        $users = User::paginate(5);
+        return view('user.gente', ['users' => $users]);
     }
 
 }

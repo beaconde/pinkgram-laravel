@@ -30,4 +30,5 @@ Route::patch('/user/update_image/{id}', 'ImageController@update')->name('image.u
 Route::patch('/comment', 'CommentController@create')->name('comment.create');
 Route::get('/comment/delete/{id}', 'CommentController@destroy')->name('comment.destroy');
 
-Route::get('user/{nick}/profile', 'UserController@show')->name('user.profile');
+Route::get('user/{id}/profile', 'UserController@show')->name('user.profile');
+Route::get('/gente', 'UserController@index')->name('user.gente');

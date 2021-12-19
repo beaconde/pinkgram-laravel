@@ -56,7 +56,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="">
+                                <a class="nav-link" href="{{route('user.gente')}}">
                                     Gente
                                 </a>
                             </li>
@@ -81,7 +81,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a href="{{route('user.profile', ['nick' => Auth::user()->nick])}}" class="dropdown-item">
+                                    <a href="{{route('user.profile', ['id' => Auth::user()->id])}}" class="dropdown-item">
                                         Mi perfil
                                     </a>
 
